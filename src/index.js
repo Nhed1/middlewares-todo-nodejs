@@ -38,12 +38,9 @@ function checksTodoExists(request, response, next) {
   const { username } = request.headers;
   const { id } = request.params;
 
-  const regexExp =
-    /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
-
   const user = users.find((user) => user.username === username);
   const todo = user?.todos?.find((todo) => todo.id === id);
-  const isIdValid = regexExp.test(id);
+  const isIdValid = validate(id);
 
   if (!user) {
     return response.status(404).json({ error: "User not found" });
